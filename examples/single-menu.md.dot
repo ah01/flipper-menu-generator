@@ -1,0 +1,137 @@
+
+    digraph g {
+        graph [
+            rankdir = "LR"
+            style="filled"
+            pad="0.5", 
+            nodesep="0.5", 
+            ranksep="1.5"
+        ];
+        node [
+            fontsize = "11"
+            fontname = Helvetica
+            shape = plaintext
+        ];
+        edge [
+        ];
+"m2" [
+  label = <
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="orange" CELLPADDING="3" PORT="t">
+      <TR><TD WIDTH="180" PORT="0" ALIGN="left">• Mifare Classic found.<br/>Run Mifare reader?</TD></TR>
+    </TABLE>
+  >
+];
+
+"m3" [
+  label = <
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="orange" CELLPADDING="3" PORT="t">
+      <TR><TD WIDTH="180" PORT="0" ALIGN="left">• Cannot detect card type</TD></TR>
+    </TABLE>
+  >
+];
+
+"m1" [
+  label = <
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="orange" CELLPADDING="3" PORT="t">
+      <TR><TD PORT="h" BGCOLOR="black" WIDTH="180"><FONT COLOR="orange">Detect card</FONT></TD></TR>
+      <TR><TD WIDTH="180" PORT="0" ALIGN="left">• Activating RF field and wait for card.<br/>Run tests when card found.</TD></TR>
+      <TR><TD WIDTH="180" PORT="1" ALIGN="left">• Found match</TD></TR>
+      <TR><TD WIDTH="180" PORT="2" ALIGN="left">• No found</TD></TR>
+    </TABLE>
+  >
+];
+
+"m5" [
+  label = <
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="orange" CELLPADDING="3" PORT="t">
+      <TR><TD WIDTH="180" PORT="0" ALIGN="left">• Commands live stream<br/>0x26<br/>0x26<br/>0x26</TD></TR>
+    </TABLE>
+  >
+];
+
+"m6" [
+  label = <
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="orange" CELLPADDING="3" PORT="t">
+      <TR><TD WIDTH="180" PORT="0" ALIGN="left">• Mifare reader found</TD></TR>
+    </TABLE>
+  >
+];
+
+"m7" [
+  label = <
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="orange" CELLPADDING="3" PORT="t">
+      <TR><TD WIDTH="180" PORT="0" ALIGN="left">• EMV reader found</TD></TR>
+    </TABLE>
+  >
+];
+
+"m4" [
+  label = <
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="orange" CELLPADDING="3" PORT="t">
+      <TR><TD PORT="h" BGCOLOR="black" WIDTH="180"><FONT COLOR="orange">Reader detector</FONT></TD></TR>
+      <TR><TD WIDTH="180" PORT="0" ALIGN="left">• Passive listen for WUPA/REQA-B</TD></TR>
+      <TR><TD WIDTH="180" PORT="1" ALIGN="left">• Start active emulating</TD></TR>
+      <TR><TD WIDTH="180" PORT="2" ALIGN="left">• .</TD></TR>
+      <TR><TD WIDTH="180" PORT="3" ALIGN="left">• .</TD></TR>
+    </TABLE>
+  >
+];
+
+"m8" [
+  label = <
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="orange" CELLPADDING="3" PORT="t">
+      <TR><TD PORT="h" BGCOLOR="black" WIDTH="180"><FONT COLOR="orange">Read card</FONT></TD></TR>
+      <TR><TD WIDTH="180" PORT="0" ALIGN="left">• Mifare Classic</TD></TR>
+      <TR><TD WIDTH="180" PORT="1" ALIGN="left">• Mifare Ultralight</TD></TR>
+      <TR><TD WIDTH="180" PORT="2" ALIGN="left">• EMV get PAN</TD></TR>
+      <TR><TD WIDTH="180" PORT="3" ALIGN="left">• what more?</TD></TR>
+    </TABLE>
+  >
+];
+
+"m9" [
+  label = <
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="orange" CELLPADDING="3" PORT="t">
+      <TR><TD PORT="h" BGCOLOR="black" WIDTH="180"><FONT COLOR="orange">Saved dumps</FONT></TD></TR>
+      <TR><TD WIDTH="180" PORT="0" ALIGN="left">• mfc_a6b804bf</TD></TR>
+      <TR><TD WIDTH="180" PORT="1" ALIGN="left">• home</TD></TR>
+      <TR><TD WIDTH="180" PORT="2" ALIGN="left">• mfu_04bfac72</TD></TR>
+      <TR><TD WIDTH="180" PORT="3" ALIGN="left">• emv_paywave_1007</TD></TR>
+    </TABLE>
+  >
+];
+
+"m10" [
+  label = <
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="orange" CELLPADDING="3" PORT="t">
+      <TR><TD PORT="h" BGCOLOR="black" WIDTH="180"><FONT COLOR="orange">USB NFC Reader</FONT></TD></TR>
+      <TR><TD WIDTH="180" PORT="0" ALIGN="left">• Activates instantly.<br/>No more display updates</TD></TR>
+    </TABLE>
+  >
+];
+
+"m0" [
+  label = <
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="orange" CELLPADDING="3" PORT="t">
+      <TR><TD PORT="h" BGCOLOR="black" WIDTH="180"><FONT COLOR="orange">NFC</FONT></TD></TR>
+      <TR><TD WIDTH="180" PORT="0" ALIGN="left">• Detect card</TD></TR>
+      <TR><TD WIDTH="180" PORT="1" ALIGN="left">• Reader detector</TD></TR>
+      <TR><TD WIDTH="180" PORT="2" ALIGN="left">• Read card</TD></TR>
+      <TR><TD WIDTH="180" PORT="3" ALIGN="left">• Saved dumps</TD></TR>
+      <TR><TD WIDTH="180" PORT="4" ALIGN="left">• USB NFC Reader</TD></TR>
+    </TABLE>
+  >
+];
+
+m1:1 -> m2:0;
+m1:2 -> m3:0;
+m0:0 -> m1:h;
+m4:0 -> m5:0;
+m4:2 -> m6:0;
+m4:3 -> m7:0;
+m0:1 -> m4:h;
+m0:2 -> m8:h;
+m0:3 -> m9:h;
+m0:4 -> m10:h;
+
+}

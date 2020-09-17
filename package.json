@@ -1,0 +1,17 @@
+{
+    "name": "flipper-menu-generator",
+    "version": "1.0.0",
+    "description": "Generates menu tree image from markdown code",
+    "main": "index.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Flipper-Zero/flipper-menu-generator.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "debug": "^4.1.1",
+        "minimist": "^1.2.5",
+        "markmap-lib": "0.8.0"
+    }
+}
