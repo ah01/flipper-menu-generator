@@ -1,0 +1,9 @@
+gen [options] file
+
+Generate menu images from given markdown file
+
+Options:
+
+-s
+-m
+-u

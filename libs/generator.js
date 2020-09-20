@@ -58,8 +58,24 @@ class MenuGenerator
 {
     load(markdown) 
     {
-        let parser = new Parser();
-        this.data = parser.parse(markdown);
+        //let parser = new Parser();
+        //this.data = parser.parse(markdown);
+
+        var doc = Parser.parseDocument(markdown);
+
+        console.log(doc);
+
+        for(let l of doc.blocks)
+        {
+            if (l.isMenu)
+            {
+                let m = Parser.parseMenu(l.text);
+                console.log(m);
+            }
+        }
+
+
+
         return this.data;
     }
 
@@ -75,4 +91,4 @@ class MenuGenerator
     }
 }
 
-module.exports = MenuGenerator;
+module.exports.generator = generator; // = MenuGenerator;

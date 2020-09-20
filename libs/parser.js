@@ -1,23 +1,73 @@
 const debug = require("debug")("parser");
 const markmap = require('markmap-lib/dist/transform');
 
+const menuSectionStart = "<!--- menu structure -->";
+const menuSectionEnd = "<!--- menu structure end -->";
+
+function findLastHeaderBeforeLine(lines, line)
+{
+    do{
+        var l = lines[line--];
+        if (l.startsWith("#"))
+            return l.replace(/^#+(\s*)/, "").trim();
+    } while (line > 0)
+}
+
 class Parser
 {
-    parse(markdown)
+    static parseDocument(markdown)
+    {
+        let lines = markdown.split("\n");
+        let doc = new Document();
+        
+        let isMenuSection = false;
+        let last = "";
+        let lastHeader = "";
+
+        for(let i = 0; i < lines.length; i++)
+        {
+            var line = lines[i] + "\n";
+            var ll = lines[i].trim().toLowerCase();
+
+            if (ll === menuSectionStart)
+            {
+                doc.blocks.push({isMenu: false, text: last});
+                isMenuSection = true;
+                lastHeader = findLastHeaderBeforeLine(lines, i);
+                last = line;
+                continue;
+            }
+            else if (ll === menuSectionEnd)
+            {
+                last += line + "\n";
+                isMenuSection = false;
+                doc.blocks.push({isMenu: true, header: lastHeader, text: last});
+                last = "";
+                continue;
+            }
+
+            last += line;
+        }
+
+        doc.blocks.push({isMenu: isMenuSection, text: last});
+
+        for (let m of doc.blocks.filter(x => x.isMenu))
+        {
+            m.structure = Parser.parseMenu(m.text);
+        }
+
+        //console.log(doc);
+        return doc;
+    }
+
+    static parseMenu(markdown)
     {
         let data = markmap.transform(markdown);
-
+        let structure = new MenuStructure();
         let menuId = 0;
-        let menus = [];
-        let edges = [];
 
-        let root = processItem(data);
-
-        return {
-            root: root,
-            menus: menus,
-            edges: edges
-        };
+        structure.root = processItem(data);
+        return structure;
 
         function processItem(item)
         {
@@ -33,12 +83,22 @@ class Parser
                 {
                     i.submenu = submenu;
                     let e = new Edge(i, submenu);
-                    edges.push(e);
+                    structure.edges.push(e);
                 }
             }
-            menus.push(menu);
+            structure.menus.push(menu);
             return menu;
         }
+    }
+}
+
+class MenuStructure
+{
+    constructor()
+    {
+        this.root = null;
+        this.menus = [];
+        this.edges = [];
     }
 }
 
@@ -77,6 +137,17 @@ class Edge
     {
         this.from = fromItem;
         this.to = toMenu;
+    }
+}
+
+/**
+ * Represent MD document with multiple menus
+ */
+class Document
+{
+    constructor()
+    {
+        this.blocks = [];
     }
 }
 
